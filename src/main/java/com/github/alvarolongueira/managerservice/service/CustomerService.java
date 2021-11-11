@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.github.alvarolongueira.managerservice.controller.request.customer.CreateCustomerRequest;
 import com.github.alvarolongueira.managerservice.controller.request.customer.UpdateCustomerRequest;
-import com.github.alvarolongueira.managerservice.controller.response.customer.CustomerResponse;
 import com.github.alvarolongueira.managerservice.domain.Customer;
 import com.github.alvarolongueira.managerservice.repository.CustomerRepository;
 import com.github.alvarolongueira.managerservice.repository.entity.CustomerEntity;
@@ -31,11 +30,10 @@ public class CustomerService {
 		return repository.findById(customerId).map(CustomerEntity::convertToDomain)
 				// TODO generar excepcion
 				.orElse(null);
-		// .orElseThrow(() -> new UserNotFoundException("User with id " + userId
-		// + " not found"));
+		// .orElseThrow(() -> new UserNotFoundException("User with id " + userId + " not found"));
 	}
 
-	public CustomerResponse createCustomer(CreateCustomerRequest request) {
+	public Customer createCustomer(CreateCustomerRequest request) {
 		// TODO
 		return null;
 	}
@@ -45,7 +43,7 @@ public class CustomerService {
 		return null;
 	}
 
-	public CustomerResponse updateCustomer(long customerId, UpdateCustomerRequest request) {
+	public Customer updateCustomer(long customerId, UpdateCustomerRequest request) {
 		// TODO
 		return null;
 	}

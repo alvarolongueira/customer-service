@@ -43,13 +43,15 @@ public class CustomerController {
 	@GetMapping(path = "/{customerId}")
 	public ResponseEntity<CustomerResponse> getCustomerById(@PathVariable(name = "customerId") long customerId) {
 		Customer customer = customerService.getCustomerById(customerId);
-		CustomerResponse response = new CustomerResponse(customer.getName(), customer.getSurname(), customer.getPhoto());
+		CustomerResponse response = CustomerResponse.convertToResponse(customer);
 		return ResponseBody.of(response);
 	}
 
 	@PostMapping
 	public ResponseEntity<CustomerResponse> createCustomer(@RequestBody CreateCustomerRequest request) {
-		return ResponseBody.of(customerService.createCustomer(request));
+		Customer customer = customerService.createCustomer(request);
+		CustomerResponse response = CustomerResponse.convertToResponse(customer);
+		return ResponseBody.of(response);
 	}
 
 	@DeleteMapping(path = "/{customerId}")
@@ -59,7 +61,9 @@ public class CustomerController {
 
 	@PatchMapping(path = "/{customerId}")
 	public ResponseEntity<CustomerResponse> updateCustomer(@PathVariable(name = "customerId") long customerId, @RequestBody UpdateCustomerRequest request) {
-		return ResponseBody.of(customerService.updateCustomer(customerId, request));
+		Customer customer = customerService.updateCustomer(customerId, request);
+		CustomerResponse response = CustomerResponse.convertToResponse(customer);
+		return ResponseBody.of(response);
 	}
 
 }
