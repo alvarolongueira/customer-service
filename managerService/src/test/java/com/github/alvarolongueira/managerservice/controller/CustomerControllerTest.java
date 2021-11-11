@@ -9,12 +9,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class UserControllerTest {
+public class CustomerControllerTest {
 
-	private final String MAIN_URL = "/user";
+	private final String MAIN_URL = "/customer";
 
 	@Autowired
-	private UserController controller;
+	private CustomerController controller;
 
 	@Autowired
 	private TestRestTemplate template;
@@ -27,7 +27,7 @@ public class UserControllerTest {
 	}
 
 	@Test
-	public void testMainUrlLoginSuccess() throws Exception {
+	public void testMainUrlWithSuccessLogin() throws Exception {
 		// TODO
 	}
 
@@ -37,37 +37,32 @@ public class UserControllerTest {
 	}
 
 	@Test
-	public void getAllUsers() throws Exception {
+	public void getAllCustomers() throws Exception {
 		// TODO
 	}
 
 	@Test
-	public void createUser() throws Exception {
+	public void getFullCustomerInformation() throws Exception {
 		// TODO
 	}
 
 	@Test
-	public void updateUser() throws Exception {
+	public void createCustomerSuccess() throws Exception {
 		// TODO
 	}
 
 	@Test
-	public void deleteUser() throws Exception {
+	public void createCustomerFailEmptyFields() throws Exception {
 		// TODO
 	}
 
 	@Test
-	public void changeAdminStatus() throws Exception {
+	public void updateCustomer() throws Exception {
 		// TODO
 	}
 
 	@Test
-	public void anyModificationWithSuccessLogin() throws Exception {
-		// TODO
-	}
-
-	@Test
-	public void anyModificationWithoutLogin() throws Exception {
+	public void deleteCustomer() throws Exception {
 		// TODO
 	}
 

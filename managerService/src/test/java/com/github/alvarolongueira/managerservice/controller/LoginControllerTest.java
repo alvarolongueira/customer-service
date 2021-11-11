@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class LoginControllerTest {
 
+	private final String MAIN_URL = "/login";
+
 	@Autowired
 	private LoginController controller;
 
@@ -20,7 +22,7 @@ public class LoginControllerTest {
 	@Test
 	public void testMainUrl() throws Exception {
 		Assert.assertNotNull(controller);
-		ResponseEntity<String> response = template.getForEntity("/login", String.class);
+		ResponseEntity<String> response = template.getForEntity(MAIN_URL, String.class);
 		Assert.assertEquals(response.getStatusCode(), HttpStatus.OK);
 	}
 
