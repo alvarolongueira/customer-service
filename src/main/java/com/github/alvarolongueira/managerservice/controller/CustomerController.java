@@ -1,5 +1,8 @@
 package com.github.alvarolongueira.managerservice.controller;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +18,7 @@ import com.github.alvarolongueira.managerservice.controller.request.customer.Upd
 import com.github.alvarolongueira.managerservice.controller.response.ResponseBody;
 import com.github.alvarolongueira.managerservice.controller.response.customer.CustomerListResponse;
 import com.github.alvarolongueira.managerservice.controller.response.customer.CustomerResponse;
+import com.github.alvarolongueira.managerservice.domain.Customer;
 import com.github.alvarolongueira.managerservice.service.CustomerService;
 
 @RestController
@@ -29,12 +33,18 @@ public class CustomerController {
 
 	@GetMapping
 	public ResponseEntity<CustomerListResponse> get() {
-		return ResponseBody.of(customerService.getAllCustomers());
+		List<Customer> customers = customerService.getAllCustomers();
+		List<String> names = customers.stream().map(value -> value.getName()).collect(Collectors.toList());
+		CustomerListResponse response = new CustomerListResponse();
+		response.setNames(names);
+		return ResponseBody.of(response);
 	}
 
 	@GetMapping(path = "/{customerId}")
 	public ResponseEntity<CustomerResponse> getCustomerById(@PathVariable(name = "customerId") long customerId) {
-		return ResponseBody.of(customerService.getCustomerById(customerId));
+		Customer customer = customerService.getCustomerById(customerId);
+		CustomerResponse response = new CustomerResponse(customer.getName(), customer.getSurname(), customer.getPhoto());
+		return ResponseBody.of(response);
 	}
 
 	@PostMapping

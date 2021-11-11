@@ -2,18 +2,14 @@ package com.github.alvarolongueira.managerservice.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
 import com.github.alvarolongueira.managerservice.controller.request.customer.CreateCustomerRequest;
 import com.github.alvarolongueira.managerservice.controller.request.customer.UpdateCustomerRequest;
-import com.github.alvarolongueira.managerservice.controller.response.customer.CustomerListResponse;
 import com.github.alvarolongueira.managerservice.controller.response.customer.CustomerResponse;
 import com.github.alvarolongueira.managerservice.domain.Customer;
 import com.github.alvarolongueira.managerservice.repository.CustomerRepository;
-import com.github.alvarolongueira.managerservice.repository.entity.CustomerEntity;
 
 @Service
 public class CustomerService {
@@ -24,26 +20,18 @@ public class CustomerService {
 		this.repository = repository;
 	}
 
-	public CustomerListResponse getAllCustomers() {
+	public List<Customer> getAllCustomers() {
 		List<Customer> customers = new ArrayList<Customer>();
 		this.repository.findAll().forEach(value -> customers.add(Customer.convertToDomain(value)));
-
-		List<String> names = customers.stream().map(value -> value.getName()).collect(Collectors.toList());
-
-		CustomerListResponse response = new CustomerListResponse();
-		response.setNames(names);
-		return response;
+		return customers;
 	}
 
-	public CustomerResponse getCustomerById(long customerId) {
-		Optional<CustomerEntity> entity = this.repository.findById(customerId);
-		if (!entity.isPresent()) {
-			//TODO generar excepcion
-		}
-		
-		Customer customer = Customer.convertToDomain(entity.get());
-		CustomerResponse response = new CustomerResponse(customer.getName(), customer.getSurname(), customer.getPhoto());
-		return response;
+	public Customer getCustomerById(long customerId) {
+		return repository.findById(customerId)
+				.map(Customer::convertToDomain)
+				//TODO generar excepcion
+				.orElse(null);
+				//.orElseThrow(() -> new UserNotFoundException("User with id " + userId + " not found"));
 	}
 
 	public CustomerResponse createCustomer(CreateCustomerRequest request) {
