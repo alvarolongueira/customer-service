@@ -1,7 +1,5 @@
 package com.github.alvarolongueira.managerservice.domain;
 
-import com.github.alvarolongueira.managerservice.repository.entity.CustomerEntity;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -21,9 +19,5 @@ public class Customer {
 
 	// TODO
 	private String photo;
-
-	public static Customer convertToDomain(CustomerEntity entity) {
-		return new Customer(entity.getId(), entity.getName(), entity.getSurname(), entity.getCreationUser(), entity.getModificationUser(), entity.getPhoto());
-	}
 
 }

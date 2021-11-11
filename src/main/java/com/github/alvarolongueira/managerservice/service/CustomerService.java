@@ -10,6 +10,7 @@ import com.github.alvarolongueira.managerservice.controller.request.customer.Upd
 import com.github.alvarolongueira.managerservice.controller.response.customer.CustomerResponse;
 import com.github.alvarolongueira.managerservice.domain.Customer;
 import com.github.alvarolongueira.managerservice.repository.CustomerRepository;
+import com.github.alvarolongueira.managerservice.repository.entity.CustomerEntity;
 
 @Service
 public class CustomerService {
@@ -22,16 +23,16 @@ public class CustomerService {
 
 	public List<Customer> getAllCustomers() {
 		List<Customer> customers = new ArrayList<Customer>();
-		this.repository.findAll().forEach(value -> customers.add(Customer.convertToDomain(value)));
+		this.repository.findAll().forEach(value -> customers.add(CustomerEntity.convertToDomain(value)));
 		return customers;
 	}
 
 	public Customer getCustomerById(long customerId) {
-		return repository.findById(customerId)
-				.map(Customer::convertToDomain)
-				//TODO generar excepcion
+		return repository.findById(customerId).map(CustomerEntity::convertToDomain)
+				// TODO generar excepcion
 				.orElse(null);
-				//.orElseThrow(() -> new UserNotFoundException("User with id " + userId + " not found"));
+		// .orElseThrow(() -> new UserNotFoundException("User with id " + userId
+		// + " not found"));
 	}
 
 	public CustomerResponse createCustomer(CreateCustomerRequest request) {
@@ -40,7 +41,7 @@ public class CustomerService {
 	}
 
 	public Void deleteCustomer(long customerId) {
-		// TODO
+		this.repository.deleteById(customerId);
 		return null;
 	}
 
