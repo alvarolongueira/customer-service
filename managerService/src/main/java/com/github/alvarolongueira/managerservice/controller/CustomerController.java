@@ -1,7 +1,5 @@
 package com.github.alvarolongueira.managerservice.controller;
 
-import java.util.List;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.github.alvarolongueira.managerservice.controller.request.customer.CreateCustomerRequest;
 import com.github.alvarolongueira.managerservice.controller.request.customer.UpdateCustomerRequest;
 import com.github.alvarolongueira.managerservice.controller.response.ResponseBody;
+import com.github.alvarolongueira.managerservice.controller.response.customer.CustomerListResponse;
 import com.github.alvarolongueira.managerservice.controller.response.customer.CustomerResponse;
 import com.github.alvarolongueira.managerservice.service.CustomerService;
 
@@ -29,7 +28,7 @@ public class CustomerController {
 	}
 
 	@GetMapping
-	public ResponseEntity<List<CustomerResponse>> get() {
+	public ResponseEntity<CustomerListResponse> get() {
 		return ResponseBody.of(customerService.getAllCustomers());
 	}
 
