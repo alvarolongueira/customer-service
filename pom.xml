@@ -9,7 +9,7 @@
 		<version>2.5.4</version>
 	</parent>
 
-	<groupId>com.github.alvarolongueira</groupId>
+	<groupId>com.alvarolongueira</groupId>
 	<artifactId>managerService</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
