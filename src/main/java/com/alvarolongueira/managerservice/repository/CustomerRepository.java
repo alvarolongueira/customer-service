@@ -1,9 +1,13 @@
 package com.alvarolongueira.managerservice.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import java.util.Optional;
+
+import org.springframework.data.repository.PagingAndSortingRepository;
 
 import com.alvarolongueira.managerservice.repository.entity.CustomerEntity;
 
-public interface CustomerRepository extends CrudRepository<CustomerEntity, Long>{
+public interface CustomerRepository extends PagingAndSortingRepository<CustomerEntity, Long> {
+
+	Optional<CustomerEntity> findByNameAndSurname(String name, String surname);
 
 }

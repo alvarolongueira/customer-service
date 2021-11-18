@@ -13,11 +13,13 @@ public class Customer {
 
 	private String surname;
 
-	private long creationUser;
-
-	private long modificationUser;
-
 	// TODO
-	private String photo;
+	private Long photo;
+
+	private String creationUser;
+
+	//TODO optional
+	private String modificationUser;
+
 
 }

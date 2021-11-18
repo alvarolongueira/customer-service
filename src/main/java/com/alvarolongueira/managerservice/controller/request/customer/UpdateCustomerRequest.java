@@ -1,17 +1,17 @@
 package com.alvarolongueira.managerservice.controller.request.customer;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class UpdateCustomerRequest {
 
 	private String name;
 
 	private String surname;
 
-	private long modificationUser;
-
 	// TODO
-	private String photo;
+	private Long photo;
 
 }
