@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.alvarolongueira.managerservice.controller.request.customer.CreateCustomerRequest;
 import com.alvarolongueira.managerservice.controller.request.customer.UpdateCustomerRequest;
@@ -35,6 +36,7 @@ public class CustomerService {
 				.orElseThrow(() -> new CustomerNotFoundException("Customer with id " + customerId + " not found"));
 	}
 
+	@Transactional
 	public Customer createCustomer(CreateCustomerRequest request) throws CustomerAlreadyExistsException, CustomerRequiredFieldsException {
 
 		if (request.getName().isEmpty() || request.getSurname().isEmpty() || request.getPhoto() <= 0L) {
@@ -55,6 +57,7 @@ public class CustomerService {
 		return entity.toDomain();
 	}
 
+	@Transactional
 	public Void deleteCustomer(long customerId) throws CustomerNotFoundException {
 		Optional<CustomerEntity> oldEntity = repository.findById(customerId);
 		if (!oldEntity.isPresent()) {
@@ -65,6 +68,7 @@ public class CustomerService {
 		return null;
 	}
 
+	@Transactional
 	public Customer updateCustomer(long customerId, UpdateCustomerRequest request)
 			throws CustomerNotFoundException, CustomerAlreadyExistsException, CustomerRequiredFieldsException {
 		if (request.getName().isEmpty() || request.getSurname().isEmpty() || request.getPhoto() <= 0L) {
