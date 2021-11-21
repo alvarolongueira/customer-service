@@ -9,7 +9,7 @@ public class CustomerAlreadyExistsException extends ManagerServiceException {
 	private static final long serialVersionUID = 1L;
 
 	public CustomerAlreadyExistsException(String message) {
-		super(message, HttpStatus.FORBIDDEN);
+		super(message, HttpStatus.NOT_MODIFIED);
 	}
 
 }

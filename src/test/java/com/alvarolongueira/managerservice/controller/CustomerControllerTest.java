@@ -35,7 +35,7 @@ public class CustomerControllerTest {
 	public void testMainUrl() throws Exception {
 		Assert.assertNotNull(controller);
 		ResponseEntity<String> responseEntity = template.getForEntity(MAIN_URL, String.class);
-		Assert.assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
+		Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 	}
 
 	@Test
@@ -90,7 +90,7 @@ public class CustomerControllerTest {
 
 		ResponseEntity<String> responseEntity = template.postForEntity(MAIN_URL, request, String.class);
 
-		Assert.assertEquals(HttpStatus.FORBIDDEN, responseEntity.getStatusCode());
+		Assert.assertEquals(HttpStatus.NOT_MODIFIED, responseEntity.getStatusCode());
 	}
 
 	@Test
@@ -127,7 +127,7 @@ public class CustomerControllerTest {
 
 		ResponseEntity<String> responseEntity = template.exchange(MAIN_URL + MockData.CUSTOMER_1.getId(), HttpMethod.PUT, httpEntity, String.class);
 
-		Assert.assertEquals(HttpStatus.FORBIDDEN, responseEntity.getStatusCode());
+		Assert.assertEquals(HttpStatus.NOT_MODIFIED, responseEntity.getStatusCode());
 	}
 
 	@Test
