@@ -39,16 +39,6 @@ public class CustomerControllerTest {
 	}
 
 	@Test
-	public void testMainUrlWithSuccessLogin() throws Exception {
-		// TODO
-	}
-
-	@Test
-	public void testMainUrlWithoutLogin() throws Exception {
-		// TODO
-	}
-
-	@Test
 	public void getAllCustomers() throws Exception {
 		ResponseEntity<String> responseEntity = template.getForEntity(MAIN_URL, String.class);
 

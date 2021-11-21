@@ -13,7 +13,7 @@ public class UserController {
 
 	@GetMapping
 	public ResponseEntity<String> get() {
-		return new ResponseEntity<String>("", new HttpHeaders(), HttpStatus.OK);
+		return new ResponseEntity<String>("EMPTY", new HttpHeaders(), HttpStatus.OK);
 	}
 
 }

@@ -27,16 +27,6 @@ public class UserControllerTest {
 	}
 
 	@Test
-	public void testMainUrlLoginSuccess() throws Exception {
-		// TODO
-	}
-
-	@Test
-	public void testMainUrlWithoutLogin() throws Exception {
-		// TODO
-	}
-
-	@Test
 	public void getAllUsers() throws Exception {
 		// TODO
 	}
@@ -58,16 +48,6 @@ public class UserControllerTest {
 
 	@Test
 	public void changeAdminStatus() throws Exception {
-		// TODO
-	}
-
-	@Test
-	public void anyModificationWithSuccessLogin() throws Exception {
-		// TODO
-	}
-
-	@Test
-	public void anyModificationWithoutLogin() throws Exception {
 		// TODO
 	}
 
