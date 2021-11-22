@@ -8,6 +8,6 @@ import com.alvarolongueira.managerservice.repository.entity.UserEntity;
 
 public interface UserRepository extends CrudRepository<UserEntity,Long>{
 
-	Optional<UserEntity> findByNameAndPass(String name, String pass);
+	Optional<UserEntity> findByNameAndPass(String name, String password);
 
 }

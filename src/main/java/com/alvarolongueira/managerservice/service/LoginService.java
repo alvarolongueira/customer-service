@@ -30,9 +30,9 @@ public class LoginService {
 		this.repository = repository;
 	}
 
-	public UserApplication login(String userName, String pass) throws UserNotFoundException {
+	public UserApplication login(String userName, String password) throws UserNotFoundException {
 		
-		Optional<UserEntity> userEntity = this.repository.findByNameAndPass(userName, pass);
+		Optional<UserEntity> userEntity = this.repository.findByNameAndPass(userName, password);
 		if (!userEntity.isPresent()) {
 			throw new UserNotFoundException("Wrong credentials");
 		}

@@ -20,8 +20,8 @@ public class LoginController {
 	}
 
 	@PostMapping
-	public UserApplication login(@RequestParam("user") String userName, @RequestParam("pass") String pass) throws UserNotFoundException {
-		return this.loginService.login(userName, pass);
+	public UserApplication login(@RequestParam("user") String userName, @RequestParam("pass") String password) throws UserNotFoundException {
+		return this.loginService.login(userName, password);
 	}
 
 }
