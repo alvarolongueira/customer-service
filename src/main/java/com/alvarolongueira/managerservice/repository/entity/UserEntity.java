@@ -7,6 +7,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.alvarolongueira.managerservice.domain.User;
+import com.alvarolongueira.managerservice.security.RoleFactory;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,4 +34,11 @@ public class UserEntity {
 	@Column
 	private int role;
 
+	public User toDomain() {
+		return UserEntity.convertToDomain(this);
+	}
+
+	public static User convertToDomain(UserEntity entity) {
+		return new User(entity.getId(), entity.getName(), entity.getPass(), RoleFactory.getRole(entity.getRole()));
+	}
 }

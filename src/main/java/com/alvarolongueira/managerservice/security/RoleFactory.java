@@ -13,4 +13,9 @@ public class RoleFactory {
 	public static String getRole(int idRole) {
 		return MAP.inverse().get(idRole);
 	}
+
+	public static int getRole(String role) {
+		return MAP.get(role);
+	}
+	
 }

@@ -16,7 +16,6 @@ import com.alvarolongueira.managerservice.controller.request.customer.UpdateCust
 import com.alvarolongueira.managerservice.controller.response.customer.CustomerListResponse;
 import com.alvarolongueira.managerservice.controller.response.customer.CustomerResponse;
 import com.alvarolongueira.managerservice.mock.MockData;
-import com.alvarolongueira.managerservice.repository.CustomerRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableList;
 

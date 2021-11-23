@@ -40,7 +40,7 @@ public class CustomerService {
 	public Customer createCustomer(CreateCustomerRequest request) throws CustomerAlreadyExistsException, CustomerRequiredFieldsException {
 
 		if (request.getName().isEmpty() || request.getSurname().isEmpty() || request.getPhoto() <= 0L) {
-			throw new CustomerRequiredFieldsException("Customer " + request.getName() + " " + request.getSurname() + " already exists");
+			throw new CustomerRequiredFieldsException("Empty required fields: " + request);
 		}
 
 		Optional<CustomerEntity> oldEntity = repository.findByNameAndSurname(request.getName(), request.getSurname());
@@ -90,7 +90,7 @@ public class CustomerService {
 		newEntity.setSurname(request.getSurname());
 		newEntity.setPhoto(request.getPhoto());
 		CustomerEntity entity = repository.save(newEntity);
-		
+
 		return entity.toDomain();
 	}
 

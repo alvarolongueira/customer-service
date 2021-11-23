@@ -5,14 +5,12 @@ import com.alvarolongueira.managerservice.domain.Customer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class CustomerResponse {
 
-	@NonNull
 	private String name;
 
 	private String surname;

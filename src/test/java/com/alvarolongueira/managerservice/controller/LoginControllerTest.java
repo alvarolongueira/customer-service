@@ -24,13 +24,13 @@ public class LoginControllerTest {
 
 	@Test
 	public void successLogin() throws Exception {
-		UserLoginRequest request = new UserLoginRequest(MockData.USER_1.getName(), MockData.USER_1.getPass());
+		UserLoginRequest request = new UserLoginRequest(MockData.USER_2.getName(), MockData.USER_2.getPass());
 		ResponseEntity<String> responseEntity = template.postForEntity(MAIN_URL, request, String.class);
 		
 		UserApplication userApplication = objectMapper.readValue(responseEntity.getBody(), UserApplication.class);
 
-		Assert.assertEquals(MockData.USER_1.getName(), userApplication.getUserName());
-		Assert.assertEquals(MockData.USER_1.getRole(), userApplication.getRole());
+		Assert.assertEquals(MockData.USER_2.getName(), userApplication.getUserName());
+		Assert.assertEquals(MockData.USER_2.getRole(), userApplication.getRole());
 	}
 
 	@Test
@@ -42,7 +42,7 @@ public class LoginControllerTest {
 
 	@Test
 	public void failLoginWrongPass() throws Exception {
-		UserLoginRequest request = new UserLoginRequest(MockData.USER_1.getName(), "invented_pass");
+		UserLoginRequest request = new UserLoginRequest(MockData.USER_2.getName(), "invented_pass");
 		ResponseEntity<String> responseEntity = template.postForEntity(MAIN_URL, request, String.class);
 		Assert.assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
 	}
