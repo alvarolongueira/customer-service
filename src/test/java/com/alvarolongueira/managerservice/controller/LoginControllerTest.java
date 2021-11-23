@@ -8,32 +8,42 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import com.alvarolongueira.managerservice.controller.request.user.UserLoginRequest;
+import com.alvarolongueira.managerservice.mock.MockData;
+import com.alvarolongueira.managerservice.security.UserApplication;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class LoginControllerTest {
 
 	private final String MAIN_URL = "/login";
-
-	@Autowired
-	private LoginController controller;
+	private final ObjectMapper objectMapper = new ObjectMapper();
 
 	@Autowired
 	private TestRestTemplate template;
 
 	@Test
-	public void testMainUrl() throws Exception {
-		Assert.assertNotNull(controller);
-		ResponseEntity<String> responseEntity = template.getForEntity(MAIN_URL, String.class);
-		Assert.assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
-	}
-
-	@Test
 	public void successLogin() throws Exception {
-		// TODO
+		UserLoginRequest request = new UserLoginRequest(MockData.USER_1.getName(), MockData.USER_1.getPass());
+		ResponseEntity<String> responseEntity = template.postForEntity(MAIN_URL, request, String.class);
+		
+		UserApplication userApplication = objectMapper.readValue(responseEntity.getBody(), UserApplication.class);
+
+		Assert.assertEquals(MockData.USER_1.getName(), userApplication.getUserName());
+		Assert.assertEquals(MockData.USER_1.getRole(), userApplication.getRole());
 	}
 
 	@Test
-	public void failLogin() throws Exception {
-		// TODO
+	public void failLoginWrongUser() throws Exception {
+		UserLoginRequest request = new UserLoginRequest("no_existent", "pass");
+		ResponseEntity<String> responseEntity = template.postForEntity(MAIN_URL, request, String.class);
+		Assert.assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
 	}
 
+	@Test
+	public void failLoginWrongPass() throws Exception {
+		UserLoginRequest request = new UserLoginRequest(MockData.USER_1.getName(), "invented_pass");
+		ResponseEntity<String> responseEntity = template.postForEntity(MAIN_URL, request, String.class);
+		Assert.assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
+	}
 }

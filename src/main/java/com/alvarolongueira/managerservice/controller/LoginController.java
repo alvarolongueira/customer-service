@@ -1,10 +1,11 @@
 package com.alvarolongueira.managerservice.controller;
 
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alvarolongueira.managerservice.controller.request.user.UserLoginRequest;
 import com.alvarolongueira.managerservice.exception.user.UserNotFoundException;
 import com.alvarolongueira.managerservice.security.UserApplication;
 import com.alvarolongueira.managerservice.service.LoginService;
@@ -20,8 +21,8 @@ public class LoginController {
 	}
 
 	@PostMapping
-	public UserApplication login(@RequestParam("user") String userName, @RequestParam("pass") String password) throws UserNotFoundException {
-		return this.loginService.login(userName, password);
+	public UserApplication login(@RequestBody UserLoginRequest request) throws UserNotFoundException {
+		return this.loginService.login(request.getUser(), request.getPass());
 	}
 
 }
