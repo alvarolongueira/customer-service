@@ -16,10 +16,4 @@ public class Customer {
 	// TODO
 	private Long photo;
 
-	private String creationUser;
-
-	//TODO optional
-	private String modificationUser;
-
-
 }

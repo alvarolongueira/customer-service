@@ -81,15 +81,16 @@ public class CustomerService {
 		}
 
 		Optional<CustomerEntity> oldEntitySameFields = repository.findByNameAndSurname(request.getName(), request.getSurname());
-		if (oldEntitySameFields.isPresent()) {
+		if (oldEntitySameFields.isPresent() && (oldEntitySameFields.get().getId() != customerId)) {
 			throw new CustomerAlreadyExistsException("Customer " + request.getName() + " " + request.getSurname() + " already exists");
 		}
 
-		CustomerEntity newEntity = new CustomerEntity();
+		CustomerEntity newEntity = oldEntity.get();
 		newEntity.setName(request.getName());
 		newEntity.setSurname(request.getSurname());
 		newEntity.setPhoto(request.getPhoto());
 		CustomerEntity entity = repository.save(newEntity);
+		
 		return entity.toDomain();
 	}
 

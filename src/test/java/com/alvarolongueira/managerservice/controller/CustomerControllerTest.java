@@ -16,6 +16,7 @@ import com.alvarolongueira.managerservice.controller.request.customer.UpdateCust
 import com.alvarolongueira.managerservice.controller.response.customer.CustomerListResponse;
 import com.alvarolongueira.managerservice.controller.response.customer.CustomerResponse;
 import com.alvarolongueira.managerservice.mock.MockData;
+import com.alvarolongueira.managerservice.repository.CustomerRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableList;
 
@@ -70,8 +71,6 @@ public class CustomerControllerTest {
 		Assert.assertEquals(MockData.CUSTOMER_3.getName(), customer.getName());
 		Assert.assertEquals(MockData.CUSTOMER_3.getSurname(), customer.getSurname());
 		Assert.assertEquals(MockData.CUSTOMER_3.getPhoto(), customer.getPhoto());
-		// TODO validar creador
-		// TODO validar modificador
 	}
 
 	@Test
@@ -105,8 +104,6 @@ public class CustomerControllerTest {
 		Assert.assertEquals(MockData.CUSTOMER_1.getName(), customer.getName());
 		Assert.assertEquals("otroSurname", customer.getSurname());
 		Assert.assertEquals(MockData.CUSTOMER_1.getPhoto(), customer.getPhoto());
-		// TODO validar creador
-		// TODO validar modificador
 	}
 
 	@Test
