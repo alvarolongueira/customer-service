@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alvarolongueira.managerservice.controller.request.user.UserLoginRequest;
-import com.alvarolongueira.managerservice.exception.user.UserNotFoundException;
 import com.alvarolongueira.managerservice.security.UserApplication;
 import com.alvarolongueira.managerservice.service.LoginService;
 
@@ -21,7 +20,7 @@ public class LoginController {
 	}
 
 	@PostMapping
-	public UserApplication login(@RequestBody UserLoginRequest request) throws UserNotFoundException {
+	public UserApplication login(@RequestBody UserLoginRequest request) {
 		return this.loginService.login(request.getUser(), request.getPass());
 	}
 

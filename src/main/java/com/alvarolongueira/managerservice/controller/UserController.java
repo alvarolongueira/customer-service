@@ -19,9 +19,6 @@ import com.alvarolongueira.managerservice.controller.response.ResponseBody;
 import com.alvarolongueira.managerservice.controller.response.user.UserListResponse;
 import com.alvarolongueira.managerservice.controller.response.user.UserResponse;
 import com.alvarolongueira.managerservice.domain.User;
-import com.alvarolongueira.managerservice.exception.user.UserAlreadyExistsException;
-import com.alvarolongueira.managerservice.exception.user.UserNotFoundException;
-import com.alvarolongueira.managerservice.exception.user.UserRequiredFieldsException;
 import com.alvarolongueira.managerservice.service.UserService;
 
 @RestController
@@ -44,27 +41,26 @@ public class UserController {
 	}
 
 	@GetMapping(path = "/{userId}")
-	public ResponseEntity<UserResponse> getUserById(@PathVariable(name = "userId") long userId) throws UserNotFoundException {
+	public ResponseEntity<UserResponse> getUserById(@PathVariable(name = "userId") long userId) {
 		User user = userService.getUserById(userId);
 		UserResponse response = UserResponse.convertToResponse(user);
 		return ResponseBody.of(response);
 	}
 
 	@PostMapping
-	public ResponseEntity<UserResponse> createUser(@RequestBody CreateUserRequest request) throws UserRequiredFieldsException, UserAlreadyExistsException {
+	public ResponseEntity<UserResponse> createUser(@RequestBody CreateUserRequest request) {
 		User user = userService.createUser(request);
 		UserResponse response = UserResponse.convertToResponse(user);
 		return ResponseBody.of(response);
 	}
 
 	@DeleteMapping(path = "/{userId}")
-	public ResponseEntity<Void> deleteUser(@PathVariable(name = "userId") long userId) throws UserNotFoundException {
+	public ResponseEntity<Void> deleteUser(@PathVariable(name = "userId") long userId) {
 		return ResponseBody.of(userService.deleteUser(userId));
 	}
 
 	@PutMapping(path = "/{userId}")
-	public ResponseEntity<UserResponse> updateUser(@PathVariable(name = "userId") long userId, @RequestBody UpdateUserRequest request)
-			throws UserNotFoundException, UserAlreadyExistsException {
+	public ResponseEntity<UserResponse> updateUser(@PathVariable(name = "userId") long userId, @RequestBody UpdateUserRequest request) {
 		User user = userService.updateUser(userId, request);
 		UserResponse response = UserResponse.convertToResponse(user);
 		return ResponseBody.of(response);

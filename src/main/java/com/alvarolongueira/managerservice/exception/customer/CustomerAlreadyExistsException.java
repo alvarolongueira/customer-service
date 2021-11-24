@@ -8,8 +8,8 @@ public class CustomerAlreadyExistsException extends ManagerServiceException {
 
 	private static final long serialVersionUID = 1L;
 
-	public CustomerAlreadyExistsException(String message) {
-		super(message, HttpStatus.NOT_MODIFIED);
+	public CustomerAlreadyExistsException(String name, String surnname) {
+		super("Customer " + name + " " + surnname + " already exists", HttpStatus.NOT_MODIFIED);
 	}
 
 }

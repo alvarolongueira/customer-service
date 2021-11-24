@@ -19,9 +19,6 @@ import com.alvarolongueira.managerservice.controller.response.ResponseBody;
 import com.alvarolongueira.managerservice.controller.response.customer.CustomerListResponse;
 import com.alvarolongueira.managerservice.controller.response.customer.CustomerResponse;
 import com.alvarolongueira.managerservice.domain.Customer;
-import com.alvarolongueira.managerservice.exception.customer.CustomerAlreadyExistsException;
-import com.alvarolongueira.managerservice.exception.customer.CustomerNotFoundException;
-import com.alvarolongueira.managerservice.exception.customer.CustomerRequiredFieldsException;
 import com.alvarolongueira.managerservice.service.CustomerService;
 
 @RestController
@@ -44,28 +41,26 @@ public class CustomerController {
 	}
 
 	@GetMapping(path = "/{customerId}")
-	public ResponseEntity<CustomerResponse> getCustomerById(@PathVariable(name = "customerId") long customerId) throws CustomerNotFoundException {
+	public ResponseEntity<CustomerResponse> getCustomerById(@PathVariable(name = "customerId") long customerId) {
 		Customer customer = customerService.getCustomerById(customerId);
 		CustomerResponse response = CustomerResponse.convertToResponse(customer);
 		return ResponseBody.of(response);
 	}
 
 	@PostMapping
-	public ResponseEntity<CustomerResponse> createCustomer(@RequestBody CreateCustomerRequest request)
-			throws CustomerAlreadyExistsException, CustomerRequiredFieldsException {
+	public ResponseEntity<CustomerResponse> createCustomer(@RequestBody CreateCustomerRequest request) {
 		Customer customer = customerService.createCustomer(request);
 		CustomerResponse response = CustomerResponse.convertToResponse(customer);
 		return ResponseBody.of(response);
 	}
 
 	@DeleteMapping(path = "/{customerId}")
-	public ResponseEntity<Void> deleteCustomer(@PathVariable(name = "customerId") long customerId) throws CustomerNotFoundException {
+	public ResponseEntity<Void> deleteCustomer(@PathVariable(name = "customerId") long customerId) {
 		return ResponseBody.of(customerService.deleteCustomer(customerId));
 	}
 
 	@PutMapping(path = "/{customerId}")
-	public ResponseEntity<CustomerResponse> updateCustomer(@PathVariable(name = "customerId") long customerId, @RequestBody UpdateCustomerRequest request)
-			throws CustomerNotFoundException, CustomerAlreadyExistsException, CustomerRequiredFieldsException {
+	public ResponseEntity<CustomerResponse> updateCustomer(@PathVariable(name = "customerId") long customerId, @RequestBody UpdateCustomerRequest request) {
 		Customer customer = customerService.updateCustomer(customerId, request);
 		CustomerResponse response = CustomerResponse.convertToResponse(customer);
 		return ResponseBody.of(response);

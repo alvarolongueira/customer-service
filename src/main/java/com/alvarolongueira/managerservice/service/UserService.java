@@ -31,19 +31,18 @@ public class UserService {
 		return users;
 	}
 
-	public User getUserById(long userId) throws UserNotFoundException {
-		return repository.findById(userId).map(UserEntity::convertToDomain)
-				.orElseThrow(() -> new UserNotFoundException("User with id " + userId + " not found"));
+	public User getUserById(long userId) {
+		return repository.findById(userId).map(UserEntity::convertToDomain).orElseThrow(() -> new UserNotFoundException(userId));
 	}
 
-	public User createUser(CreateUserRequest request) throws UserRequiredFieldsException, UserAlreadyExistsException {
+	public User createUser(CreateUserRequest request) {
 		if (request.getName().isEmpty() || request.getPass().isEmpty() || request.getRole().isEmpty()) {
-			throw new UserRequiredFieldsException("Empty required fields: " + request);
+			throw new UserRequiredFieldsException(request);
 		}
 
 		Optional<UserEntity> oldEntity = repository.findByNameAndPass(request.getName(), request.getPass());
 		if (oldEntity.isPresent()) {
-			throw new UserAlreadyExistsException("User " + request.getName() + " already exists");
+			throw new UserAlreadyExistsException(request.getName());
 		}
 
 		UserEntity newEntity = new UserEntity();
@@ -55,15 +54,15 @@ public class UserService {
 		return entity.toDomain();
 	}
 
-	public User updateUser(long userId, UpdateUserRequest request) throws UserNotFoundException, UserAlreadyExistsException {
+	public User updateUser(long userId, UpdateUserRequest request) {
 		Optional<UserEntity> oldEntity = repository.findById(userId);
 		if (!oldEntity.isPresent()) {
-			throw new UserNotFoundException("User with id " + userId + " not found");
+			throw new UserNotFoundException(userId);
 		}
 
 		Optional<UserEntity> oldEntitySameFields = repository.findByNameAndPass(request.getName(), request.getPass());
 		if (oldEntitySameFields.isPresent() && (oldEntitySameFields.get().getId() != userId)) {
-			throw new UserAlreadyExistsException("User " + request.getName() + " already exists");
+			throw new UserAlreadyExistsException(request.getName());
 		}
 
 		UserEntity newEntity = oldEntity.get();
@@ -75,10 +74,10 @@ public class UserService {
 		return entity.toDomain();
 	}
 
-	public Void deleteUser(long userId) throws UserNotFoundException {
+	public Void deleteUser(long userId) {
 		Optional<UserEntity> oldEntity = repository.findById(userId);
 		if (!oldEntity.isPresent()) {
-			throw new UserNotFoundException("User with id " + userId + " not found");
+			throw new UserNotFoundException(userId);
 		}
 
 		this.repository.deleteById(userId);

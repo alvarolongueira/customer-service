@@ -8,8 +8,8 @@ public class CustomerNotFoundException extends ManagerServiceException {
 
 	private static final long serialVersionUID = 1L;
 
-	public CustomerNotFoundException(String message) {
-		super(message, HttpStatus.NOT_FOUND);
+	public CustomerNotFoundException(long customerId) {
+		super("Customer with id " + customerId + " not found", HttpStatus.NOT_FOUND);
 	}
 
 }

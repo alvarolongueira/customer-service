@@ -31,21 +31,20 @@ public class CustomerService {
 		return customers;
 	}
 
-	public Customer getCustomerById(long customerId) throws CustomerNotFoundException {
-		return repository.findById(customerId).map(CustomerEntity::convertToDomain)
-				.orElseThrow(() -> new CustomerNotFoundException("Customer with id " + customerId + " not found"));
+	public Customer getCustomerById(long customerId) {
+		return repository.findById(customerId).map(CustomerEntity::convertToDomain).orElseThrow(() -> new CustomerNotFoundException(customerId));
 	}
 
 	@Transactional
-	public Customer createCustomer(CreateCustomerRequest request) throws CustomerAlreadyExistsException, CustomerRequiredFieldsException {
+	public Customer createCustomer(CreateCustomerRequest request) {
 
 		if (request.getName().isEmpty() || request.getSurname().isEmpty() || request.getPhoto() <= 0L) {
-			throw new CustomerRequiredFieldsException("Empty required fields: " + request);
+			throw new CustomerRequiredFieldsException(request);
 		}
 
 		Optional<CustomerEntity> oldEntity = repository.findByNameAndSurname(request.getName(), request.getSurname());
 		if (oldEntity.isPresent()) {
-			throw new CustomerAlreadyExistsException("Customer " + request.getName() + " " + request.getSurname() + " already exists");
+			throw new CustomerAlreadyExistsException(request.getName(), request.getSurname());
 		}
 
 		CustomerEntity newEntity = new CustomerEntity();
@@ -54,14 +53,15 @@ public class CustomerService {
 		newEntity.setPhoto(request.getPhoto());
 
 		CustomerEntity entity = repository.save(newEntity);
+
 		return entity.toDomain();
 	}
 
 	@Transactional
-	public Void deleteCustomer(long customerId) throws CustomerNotFoundException {
+	public Void deleteCustomer(long customerId) {
 		Optional<CustomerEntity> oldEntity = repository.findById(customerId);
 		if (!oldEntity.isPresent()) {
-			throw new CustomerNotFoundException("Customer with id " + customerId + " not found");
+			throw new CustomerNotFoundException(customerId);
 		}
 
 		this.repository.deleteById(customerId);
@@ -69,20 +69,19 @@ public class CustomerService {
 	}
 
 	@Transactional
-	public Customer updateCustomer(long customerId, UpdateCustomerRequest request)
-			throws CustomerNotFoundException, CustomerAlreadyExistsException, CustomerRequiredFieldsException {
+	public Customer updateCustomer(long customerId, UpdateCustomerRequest request) {
 		if (request.getName().isEmpty() || request.getSurname().isEmpty() || request.getPhoto() <= 0L) {
-			throw new CustomerRequiredFieldsException("Customer " + request.getName() + " " + request.getSurname() + " already exists");
+			throw new CustomerAlreadyExistsException(request.getName(), request.getSurname());
 		}
 
 		Optional<CustomerEntity> oldEntity = repository.findById(customerId);
 		if (!oldEntity.isPresent()) {
-			throw new CustomerNotFoundException("Customer with id " + customerId + " not found");
+			throw new CustomerNotFoundException(customerId);
 		}
 
 		Optional<CustomerEntity> oldEntitySameFields = repository.findByNameAndSurname(request.getName(), request.getSurname());
 		if (oldEntitySameFields.isPresent() && (oldEntitySameFields.get().getId() != customerId)) {
-			throw new CustomerAlreadyExistsException("Customer " + request.getName() + " " + request.getSurname() + " already exists");
+			throw new CustomerAlreadyExistsException(request.getName(), request.getSurname());
 		}
 
 		CustomerEntity newEntity = oldEntity.get();

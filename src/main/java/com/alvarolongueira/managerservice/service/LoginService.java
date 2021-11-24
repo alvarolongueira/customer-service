@@ -30,7 +30,7 @@ public class LoginService {
 		this.repository = repository;
 	}
 
-	public UserApplication login(String userName, String password) throws UserNotFoundException {
+	public UserApplication login(String userName, String password) {
 		
 		Optional<UserEntity> userEntity = this.repository.findByNameAndPass(userName, password);
 		if (!userEntity.isPresent()) {

@@ -2,7 +2,7 @@ package com.alvarolongueira.managerservice.exception;
 
 import org.springframework.http.HttpStatus;
 
-public abstract class ManagerServiceException extends Exception {
+public abstract class ManagerServiceException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
