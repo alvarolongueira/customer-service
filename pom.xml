@@ -10,10 +10,10 @@
 	</parent>
 
 	<groupId>com.alvarolongueira</groupId>
-	<artifactId>managerService</artifactId>
+	<artifactId>customer-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<name>managerService</name>
+	<name>customer-service</name>
 
 	<properties>
 		<jdk.version>1.8</jdk.version>
