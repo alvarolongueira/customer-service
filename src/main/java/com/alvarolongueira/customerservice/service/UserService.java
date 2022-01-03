@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.alvarolongueira.customerservice.controller.request.user.CreateUserRequest;
 import com.alvarolongueira.customerservice.controller.request.user.UpdateUserRequest;
@@ -35,6 +36,7 @@ public class UserService {
 		return this.repository.findById(userId).map(UserEntity::convertToDomain).orElseThrow(() -> new UserNotFoundException(userId));
 	}
 
+	@Transactional
 	public User createUser(CreateUserRequest request) {
 		if (request.getName().isEmpty() || request.getPass().isEmpty() || request.getRole().isEmpty()) {
 			throw new UserRequiredFieldsException(request);
@@ -54,6 +56,7 @@ public class UserService {
 		return entity.toDomain();
 	}
 
+	@Transactional
 	public User updateUser(long userId, UpdateUserRequest request) {
 		Optional<UserEntity> oldEntity = this.repository.findById(userId);
 		if (!oldEntity.isPresent()) {
@@ -73,6 +76,8 @@ public class UserService {
 		UserEntity entity = this.repository.save(newEntity);
 		return entity.toDomain();
 	}
+
+	@Transactional
 
 	public Void deleteUser(long userId) {
 		Optional<UserEntity> oldEntity = this.repository.findById(userId);
